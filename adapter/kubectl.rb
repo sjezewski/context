@@ -5,16 +5,19 @@ module Adapter
         @@field = 'current-context'
 
         class << self
-        def update(config)
+        # Uses the config loaded from a .ctx file to set the environment's state
+        def use(config)
             context_name = config['context']
             return if context_name.nil?
             set_config(context_name)
         end
+        # Gets config from current environment's state
         def get_config
             raw = `kubectl config view`
             config = YAML.load(raw)
             config
         end
+        # Sets the current environment's state to the supplied value
         def set_config(value)
             contexts = get_config()['contexts']
             found = false
@@ -35,9 +38,10 @@ module Adapter
                 exit 1
             end
         end
+        # Gets the current environment's state and saves it to a .ctx file
         def update_config
-            c = get_config
-            set_config c[@@field]
+            #c = get_config
+            #set_config c[@@field]
         end
 
         end

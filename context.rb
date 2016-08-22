@@ -81,7 +81,7 @@ def use
             puts "Adapter #{name} not implemented."
             exit 1
         end
-        adapters[name].update(config)
+        adapters[name].use(config)
     end
 
 end
