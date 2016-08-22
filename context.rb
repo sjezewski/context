@@ -64,7 +64,7 @@ when "set"
 when "view"
     view
 when "use"
-
+    use
 else
     usage
 end
