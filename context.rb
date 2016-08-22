@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'json'
+require_relative 'adapter'
 
 # Detects if there is any context in the CWD for:
 #
@@ -33,8 +34,11 @@ def view
     end
 end
 
+# TODO - if running set in CWD, call use at the end
 def set(key_path, value)
     ctx = {}
+    
+    # Load existing config
     if File.exist? $context_file
         raw = File.read $context_file
         puts "Updating existing context"
@@ -52,7 +56,32 @@ def set(key_path, value)
     end
     obj[key_path[key_index]] = value
 
+    # Write changes to config file
     File.open($context_file, "w") {|f| f << JSON(ctx)}
+end
+
+def use
+    ctx = {}
+    
+    # Load existing config
+    if File.exist? $context_file
+        raw = File.read $context_file
+        puts "Updating existing context"
+        ctx = JSON.parse raw
+    end
+
+    if ctx == {}
+        puts "No config found"
+        exit 1
+    end
+
+    adapters = Adapter.List
+    ctx.each do |name, config|
+        a = adapters[name].update(config)
+        a.set_config
+
+    end
+
 end
 
 case parse_command
