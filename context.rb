@@ -88,10 +88,17 @@ end
 
 case parse_command
 when "set"
-   key_path = ARGV[1..-2]
-   value = ARGV[-1]
-   puts "Setting #{key_path} to value #{value}"
-   set(key_path, value)
+    if ARGV.size > 1
+        key_path = ARGV[1..-2]
+        value = ARGV[-1]
+        puts "Setting #{key_path} to value #{value}"
+        set(key_path, value)
+    else
+        puts "Saving current state to current working directory."
+        Adapter.List.each do |a|
+            a.update_config
+        end
+    end
 when "view"
     view
 when "use"

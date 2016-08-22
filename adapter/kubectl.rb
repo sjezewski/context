@@ -2,6 +2,8 @@ require 'yaml'
 
 module Adapter
     class Kubectl
+        @@field = 'current-context'
+
         class << self
         def update(config)
             context_name = config['context']
@@ -28,10 +30,14 @@ module Adapter
             end
             raw = `kubectl config use-context #{value}`
             updated_config = get_config
-            if updated_config['current-context'] != value
+            if updated_config[@@field] != value
                 puts "Could not update config to #{value}.\n#{raw}"
                 exit 1
             end
+        end
+        def update_config
+            c = get_config
+            set_config c[@@field]
         end
 
         end
