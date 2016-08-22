@@ -11,13 +11,10 @@ module Adapter
         def get_config
             raw = `kubectl config view`
             config = YAML.load(raw)
-            puts "Got config: #{config}"
-            puts "Current context: #{config['current-context']}"
             config
         end
         def set_config(value)
             contexts = get_config()['contexts']
-            puts "Checking if #{value} is in #{contexts}"
             found = false
             contexts.each do |context|
                 found = true if context["name"] == value
@@ -31,7 +28,7 @@ module Adapter
             end
             raw = `kubectl config use-context #{value}`
             updated_config = get_config
-            if updated_config['current_context'] != value
+            if updated_config['current-context'] != value
                 puts "Could not update config to #{value}.\n#{raw}"
                 exit 1
             end

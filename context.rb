@@ -66,8 +66,8 @@ def use
     # Load existing config
     if File.exist? $context_file
         raw = File.read $context_file
-        puts "Updating existing context"
         ctx = JSON.parse raw
+        puts "Using local context settings:\n#{JSON.pretty_generate ctx}"
     end
 
     if ctx == {}
@@ -77,9 +77,11 @@ def use
 
     adapters = Adapter.List
     ctx.each do |name, config|
-        a = adapters[name].update(config)
-        a.set_config
-
+        if adapters[name].nil?
+            puts "Adapter #{name} not implemented."
+            exit 1
+        end
+        adapters[name].update(config)
     end
 
 end
