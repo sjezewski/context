@@ -30,7 +30,14 @@ No local context.
 # This folder doesn't have any context to setup
 $ cd some/folder
 $ ctx view
-
+{
+  "gcloud": {
+    "config": "default"
+  },
+  "kubectl": {
+    "context": "sean-dev"
+  }
+}
 ```
 
 ### Set config
@@ -42,7 +49,6 @@ $ cd some/folder
 $ ctx view
 No local context.
 $ ctx set kubectl context foo
-Setting ["kubectl", "context"] to value foo
 $ctx view
 {
   "kubectl": {
@@ -51,14 +57,17 @@ $ctx view
 }
 ```
 
-Set the `gcloud` preset. 
+Set the `gcloud` preset. [Click here](./doc/gcloud.md) for more info on how to create a gcloud preset or check which ones you have available.
 
 ```shell
-# You'll need to save the presets you want to a separate gcloud config
-# e.g:
-
+$ ctx set gcloud config foo
+$ ctx view 
+{
+  "gcloud": {
+    "config": "foo"
+  }
+}
 ```
-
 
 ### Use config
 
@@ -77,9 +86,19 @@ Here's a specific example:
 ```
 # This happens implicitly when you enter the directory
 # e.g.
+$ ctx view
+No local context
+To get started refer to: https://github.com/sjezewski/context
 $ kc config view | grep current-context
 current-context: my-dev
 $ cd some/folder
+$ ctx view
+{
+  "kubectl": {
+    "context": "sean-dev"
+  }
+}
 $ kc config view | grep current-context
+current-context: sean-dev
 ```
 
