@@ -12,7 +12,7 @@ require_relative 'adapter'
 # And updates the state of those connections accordingly.
 
 def usage
-    puts "Usage: context [use|view|set]"
+    STDERR.puts "Usage: context [use|view|set]"
     exit 1
 end
 
@@ -71,14 +71,14 @@ def use
     end
 
     if ctx == {}
-        puts "No config found"
+        STDERR.puts "No config found"
         exit 1
     end
 
     adapters = Adapter.List
     ctx.each do |name, config|
         if adapters[name].nil?
-            puts "Adapter #{name} not implemented."
+            STDERR.puts "Adapter #{name} not implemented."
             exit 1
         end
         adapters[name].use(config)
