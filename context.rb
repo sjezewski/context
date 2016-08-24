@@ -31,6 +31,7 @@ def view
         puts JSON.pretty_generate( JSON.parse(raw) )
     else
         puts "No local context"
+		exit 1
     end
 end
 

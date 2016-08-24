@@ -1,12 +1,21 @@
 module Adapter
     class Gcloud
         class << self
+
         def use(config)
-             get_config   
+            config_name = config['config']
+            return if config_name.nil?
+            set_config(config_name)
         end
+
         # Gets config from current environment's state
         def get_config
+            raw=`gcloud config list 2>&1 | head -n 1`
+            # e.g: 'Your active configuration is: [foo]'
+            raw =~ /\[(.*?)\]/
+            $1
         end
+
         # Sets the current environment's state to the supplied value
         def set_config(value)
             valid_configs = get_valid_configs
@@ -21,7 +30,7 @@ module Adapter
             end
             raw = `gcloud config configurations activate #{value}`
             updated_config = get_config
-            if updated_config[@@field] != value
+            if updated_config != value
                 puts "Could not update config to #{value}.\n#{raw}"
                 exit 1
             end
@@ -30,23 +39,8 @@ module Adapter
         private
 
         def list_valid_configs
-            # Surprisingly, `gcloud config list` does not list the available configs
-            # ... so we'll parse the results of the prompt from `gcloud init`
-            p = IO.popen("gcloud init 2>/tmp/gc_config &", "w+")
-            sleep 5 # Give gcloud time to connect. Hacky.
-            p.close_write
-            raw = File.read("/tmp/gc_config")
-            Process.kill("INT", p.pid)
-            configs = []
-            raw.split("\n").each do |line|
-                # Find line that contains config name
-                # e.g:
-                # [4] Switch to and re-initialize existing configuration: [personal]
-                if line =~ /existing configuration.*?\[(.*?)\]/
-                    configs << $1
-                end
-            end
-            configs
+            raw = `gcloud config configurations list | tail -n +2 | cut -f 1 -d " "`
+            raw.split("\n")
         end
 
         end
