@@ -7,7 +7,8 @@ module Adapter
         def List
             {
                 "kubectl" => Adapter::Kubectl,
-                "gcloud" => Adapter::Gcloud
+                "gcloud" => Adapter::Gcloud,
+				"pachctl" => Adapter::Pachctl
             }
         end
     end
