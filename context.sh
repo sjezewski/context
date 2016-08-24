@@ -30,5 +30,12 @@ function kc() {
 	check_kc
 	echo "cs: $CTX_SOURCE_DIR"
 	ctx use
-	ADDRESS=$ADDRESS kubectl $@
+	kubectl $@
+}
+
+
+function gc() {
+	echo "in wrapper"
+	ctx use
+	gcloud $@
 }

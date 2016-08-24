@@ -35,6 +35,8 @@ $ ctx view
 
 ### Set config
 
+Set the `kubectl` context:
+
 ```shell
 $ cd some/folder
 $ ctx view
@@ -48,6 +50,15 @@ $ctx view
   }
 }
 ```
+
+Set the `gcloud` preset. 
+
+```shell
+# You'll need to save the presets you want to a separate gcloud config
+# e.g:
+
+```
+
 
 ### Use config
 
