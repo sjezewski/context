@@ -3,6 +3,10 @@
 
 CTX_SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+function ctx() {
+	$CTX_SOURCE_DIR/context.rb $@
+}
+
 function pc() {
 	echo "in wrapper"
 
@@ -12,6 +16,19 @@ function pc() {
 	ADDRESS=$ADDRESS pachctl $@
 }
 
-function ctx() {
-	$CTX_SOURCE_DIR/context.rb $@
+function check_kc() {
+	which kubectl
+	if [ $? -ne 0 ]
+	then
+		echo "Cannot find kubectl on your \$PATH. Please make sure its installed"
+		exit 1
+	fi
+}
+
+function kc() {
+	echo "in wrapper"
+	check_kc
+	echo "cs: $CTX_SOURCE_DIR"
+	ctx use
+	ADDRESS=$ADDRESS kubectl $@
 }
