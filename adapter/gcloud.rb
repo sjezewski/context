@@ -18,7 +18,7 @@ module Adapter
 
         # Sets the current environment's state to the supplied value
         def set_config(value)
-            valid_configs = get_valid_configs
+            valid_configs = list_valid_configs
             if !valid_configs.include? value
                 puts "Cannot set gcloud config to #{value}"
                 valid_configs_string = valid_configs.collect {|c| "\t- #{c}"}.join("\n")
