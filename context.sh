@@ -9,21 +9,21 @@ function ctx() {
 
 function pc() {
 	check_command pachctl
-	ctx use
+	ctx use gcloud kubectl pachctl
 	PC_ADDRESS=`$CTX_SOURCE_DIR/context.rb view pachctl address`
 	ADDRESS=$PC_ADDRESS pachctl $@
 }
 
 function kc() {
 	check_command kubectl
-	ctx use
+	ctx use gcloud kubectl
 	kubectl $@
 }
 
 
 function gc() {
 	check_command gcloud
-	ctx use
+	ctx use gcloud
 	gcloud $@
 }
 

@@ -98,7 +98,7 @@ def set(key_path, value)
     File.open($context_file, "w") {|f| f << JSON(ctx)}
 end
 
-def use
+def use(input_adapters)
     ctx = {}
     
     # Load existing config
@@ -111,16 +111,20 @@ def use
         STDERR.puts "No config found"
         exit 1
     end
-
     adapters = Adapter.List
-    ctx.each do |name, config|
-        if adapters[name].nil?
-            STDERR.puts "Adapter #{name} not implemented."
-            exit 1
-        end
-        adapters[name].use(config)
-    end
-
+	if input_adapters.size == 0
+    	ctx.each do |name, config|
+        	if adapters[name].nil?
+            	STDERR.puts "Adapter #{name} not implemented."
+            	exit 1
+        	end
+       		adapters[name].use(config)
+    	end
+	else
+		input_adapters.each do |a|
+			adapters[a].use(ctx[a])
+		end
+	end
 end
 
 case parse_command
@@ -138,7 +142,7 @@ when "set"
 when "view"
     view ARGV[1..-1]
 when "use"
-    use
+    use ARGV[1..-1]
 else
     usage
 end
