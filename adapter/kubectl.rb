@@ -7,13 +7,19 @@ module Adapter
         class << self
 
 		def supported?(setting)
-			["context"].include? setting
+			["context", "init_cmd"].include? setting
 		end
 
         # Uses the config loaded from a .ctx file to set the environment's state
         def use(config)
+			cmd = config['init_cmd']
+			unless cmd.nil?
+				`#{cmd}`
+			end
+
             context_name = config['context']
             return if context_name.nil?
+
             set_config(context_name)
         end
         # Gets config from current environment's state
