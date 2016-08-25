@@ -32,7 +32,7 @@ def view(settings_path)
 		if settings_path.nil?
 	        puts JSON.pretty_generate( JSON.parse(raw) )
 		else
-			if settings.size == 0
+			if settings_path.size == 0
 				STDERR.puts "Usage:\nctx view <adapter> <setting>"
 				exit 1
 			end
@@ -135,7 +135,7 @@ when "set"
         end
     end
 when "view"
-    view ARGV[1..-2]
+    view ARGV[1..-1]
 when "use"
     use
 else
