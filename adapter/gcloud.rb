@@ -32,7 +32,7 @@ module Adapter
                 puts "To learn more about creating a gcloud config run:\n\tgcloud topic configurations"
                 exit 1
             end
-            raw = `gcloud config configurations activate #{value}`
+            raw = `gcloud config configurations activate #{value} 2>/dev/null`
             updated_config = get_config
             if updated_config != value
                 puts "Could not update config to #{value}.\n#{raw}"
