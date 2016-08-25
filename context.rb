@@ -25,10 +25,24 @@ end
 
 $context_file = "./.ctx"
 
-def view
+def view(settings_path)
     if File.exist? $context_file
         raw = File.read $context_file
-        puts JSON.pretty_generate( JSON.parse(raw) )
+		settings = JSON.parse(raw)
+		if settings_path.nil?
+	        puts JSON.pretty_generate( JSON.parse(raw) )
+		else
+			if settings.size == 0
+				STDERR.puts "Usage:\nctx view <adapter> <setting>"
+				exit 1
+			end
+			v = settings[settings_path[0]]
+			settings_path.each do |key|
+				next if key == settings_path[0]
+				v = v[key]
+			end
+			puts v
+		end
     else
         puts "No local context"
 		puts "To get started refer to: https://github.com/sjezewski/context"
@@ -121,7 +135,7 @@ when "set"
         end
     end
 when "view"
-    view
+    view ARGS[1..-2]
 when "use"
     use
 else
