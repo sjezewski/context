@@ -40,6 +40,7 @@ def view(settings_path)
 			settings_path.each do |key|
 				next if key == settings_path[0]
 				v = v[key]
+				return if v.nil?
 			end
 			puts v
 		end
