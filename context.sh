@@ -8,11 +8,7 @@ function ctx() {
 }
 
 function pc() {
-	echo "in wrapper"
-
-	echo "cs: $CTX_SOURCE_DIR"
 	ADDRESS=`$CTX_SOURCE_DIR/context.rb use pachctl address 2>/dev/null`
-	echo "using address: ($ADDRESS)"
 	ADDRESS=$ADDRESS pachctl $@
 }
 
@@ -26,16 +22,13 @@ function check_kc() {
 }
 
 function kc() {
-	echo "in wrapper"
 	check_kc
-	echo "cs: $CTX_SOURCE_DIR"
 	ctx use
 	kubectl $@
 }
 
 
 function gc() {
-	echo "in wrapper"
 	ctx use
 	gcloud $@
 }

@@ -2,6 +2,10 @@ module Adapter
     class Gcloud
         class << self
 
+		def supported?(setting)
+			["config"].include? setting
+		end
+
         def use(config)
             config_name = config['config']
             return if config_name.nil?

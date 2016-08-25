@@ -5,6 +5,11 @@ module Adapter
         @@field = 'current-context'
 
         class << self
+
+		def supported?(setting)
+			["context"].include? setting
+		end
+
         # Uses the config loaded from a .ctx file to set the environment's state
         def use(config)
             context_name = config['context']

@@ -1,6 +1,10 @@
 module Adapter
     class Pachctl
         class << self
+			def supported?(setting)
+				["address"].include? setting
+			end
+
             def use(config)
                 if config['address']
                     puts config['address']

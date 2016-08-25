@@ -43,13 +43,34 @@ def set(key_path, value)
     # Load existing config
     if File.exist? $context_file
         raw = File.read $context_file
-        puts "Updating existing context"
         ctx = JSON.parse raw
     end
 
+	adapters = Adapter.List
+
     key_index = 0
     obj = ctx
-    while key_index < key_path.size - 1 do
+	adapter = nil
+
+    while key_index < key_path.size do
+		if key_index == 0
+			adapter = key_path[key_index]
+			if adapters[adapter].nil?
+				STDERR.puts "No such adapter #{adapter} supported."
+				adapter_list = adapters.collect { |k,v| "\t- #{k}" }.join("\n")
+				STDERR.puts "Valid adapters are:\n#{adapter_list}"
+				exit 1
+			end
+		else
+			if !adapters[adapter].supported? key_path[key_index]
+				STDERR.puts "No such setting #{key_path[key_index]} for adapter #{adapter}"
+				exit 1
+			end
+		end
+
+		# Now that we've validated the settings, we don't need to initialize the leaf values to maps, they should all be scalar values
+		break if key_index == key_path.size - 1
+
         if obj[key_path[key_index]].nil?
             obj[key_path[key_index]] = {}
         end
@@ -69,7 +90,6 @@ def use
     if File.exist? $context_file
         raw = File.read $context_file
         ctx = JSON.parse raw
-        puts "Using local context settings:\n#{JSON.pretty_generate ctx}"
     end
 
     if ctx == {}
@@ -93,7 +113,6 @@ when "set"
     if ARGV.size > 1
         key_path = ARGV[1..-2]
         value = ARGV[-1]
-        puts "Setting #{key_path} to value #{value}"
         set(key_path, value)
     else
         puts "Saving current state to current working directory."
