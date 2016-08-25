@@ -13,6 +13,9 @@ module Adapter
                     puts config['address']
                 end
             end
+			def get
+
+			end
             def run_flags
                 c = get_config
                 "ADDRESS=#{c['address']}"

@@ -25,10 +25,23 @@ end
 
 $context_file = "./.ctx"
 
-def view
+def view(setting_path)
     if File.exist? $context_file
         raw = File.read $context_file
-        puts JSON.pretty_generate( JSON.parse(raw) )
+		settings = JSON.parse raw
+		if setting_path.nil?
+			puts JSON.pretty_generate(settings)
+		else
+			if setting_path.size == 0
+				STDERR.puts "Usage:\nctx view <adapter_name> <setting>"
+				exit 1
+			end
+			v = nil
+			setting_path.each do |key|
+				v = settings[key]
+			end
+			puts v
+		end
     else
         puts "No local context"
 		puts "To get started refer to: https://github.com/sjezewski/context"
@@ -61,28 +74,6 @@ def set(key_path, value)
 				STDERR.puts "Valid adapters are:\n#{adapter_list}"
 				exit 1
 			end
-		else
-			if !adapters[adapter].supported? key_path[key_index]
-				STDERR.puts "No such setting #{key_path[key_index]} for adapter #{adapter}"
-				exit 1
-			end
-		end
-
-		# Now that we've validated the settings, we don't need to initialize the leaf values to maps, they should all be scalar values
-		break if key_index == key_path.size - 1
-
-        if obj[key_path[key_index]].nil?
-            obj[key_path[key_index]] = {}
-        end
-        obj = obj[key_path[key_index]]
-        key_index += 1
-    end
-    obj[key_path[key_index]] = value
-
-    # Write changes to config file
-    File.open($context_file, "w") {|f| f << JSON(ctx)}
-end
-
 def use
     ctx = {}
     
@@ -121,7 +112,7 @@ when "set"
         end
     end
 when "view"
-    view
+    view ARGV[1..-1]
 when "use"
     use
 else
