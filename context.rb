@@ -135,7 +135,7 @@ when "set"
         end
     end
 when "view"
-    view ARGS[1..-2]
+    view ARGV[1..-2]
 when "use"
     use
 else
