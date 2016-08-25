@@ -9,9 +9,6 @@ module Adapter
 				if config['init_cmd']
 					`#{config['init_cmd']}`
 				end
-                if config['address']
-                    puts config['address']
-                end
             end
             def run_flags
                 c = get_config
