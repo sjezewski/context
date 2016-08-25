@@ -2,14 +2,15 @@ module Adapter
     class Pachctl
         class << self
 			def supported?(setting)
-				["address"].include? setting
+				["init_cmd", "address"].include? setting
 			end
 
             def use(config)
+				if config['init_cmd']
+					`#{config['init_cmd']}`
+				end
                 if config['address']
                     puts config['address']
-                else
-                    exit 1
                 end
             end
             def run_flags
