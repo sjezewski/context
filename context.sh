@@ -9,7 +9,8 @@ function ctx() {
 
 function pc() {
 	check_command pachctl
-	ADDRESS=`$CTX_SOURCE_DIR/context.rb use pachctl address 2>/dev/null`
+	ctx use
+	ADDRESS=`$CTX_SOURCE_DIR/context.rb view pachctl address`
 	ADDRESS=$ADDRESS pachctl $@
 }
 
