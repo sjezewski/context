@@ -29,10 +29,10 @@ def view(settings_path)
     if File.exist? $context_file
         raw = File.read $context_file
 		settings = JSON.parse(raw)
-		if settings_path.nil?
+		if settings_path.size == 0
 	        puts JSON.pretty_generate( JSON.parse(raw) )
 		else
-			if settings_path.size == 0
+			if settings_path.size == 1
 				STDERR.puts "Usage:\nctx view <adapter> <setting>"
 				exit 1
 			end
