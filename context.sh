@@ -8,27 +8,30 @@ function ctx() {
 }
 
 function pc() {
+	check_command pachctl
 	ADDRESS=`$CTX_SOURCE_DIR/context.rb use pachctl address 2>/dev/null`
 	ADDRESS=$ADDRESS pachctl $@
 }
 
-function check_kc() {
-	which kubectl
-	if [ $? -ne 0 ]
-	then
-		echo "Cannot find kubectl on your \$PATH. Please make sure its installed"
-		exit 1
-	fi
-}
-
 function kc() {
-	check_kc
+	check_command kubectl
 	ctx use
 	kubectl $@
 }
 
 
 function gc() {
+	check_command gcloud
 	ctx use
 	gcloud $@
 }
+
+function check_command() {
+	which $1 1>/dev/null
+	if [ $? -ne 0 ]
+	then
+		echo "Cannot find $1 on your \$PATH. Please make sure its installed"
+		exit 1
+	fi
+}
+
