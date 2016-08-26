@@ -99,6 +99,7 @@ def set(key_path, value)
 end
 
 def use(input_adapters)
+	start = Time.now
     ctx = {}
     
     # Load existing config
@@ -125,6 +126,8 @@ def use(input_adapters)
 			adapters[a].use(ctx[a])
 		end
 	end
+	finish = Time.now
+	puts "Took #{finish-start}s to initialize state"
 end
 
 case parse_command
