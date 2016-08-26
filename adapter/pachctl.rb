@@ -7,8 +7,7 @@ module Adapter
 
             def use(config)
 				if config['init_cmd']
-					puts "# Running #{config['init_cmd']}"
-					`#{config['init_cmd']}`
+					system "#{config['init_cmd']}"
 				end
             end
             def run_flags

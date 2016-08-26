@@ -1,1 +1,1 @@
-{"kubectl":{"context":"foo","blah":"thing"},"":"kubects"}
+{"kubectl":{"context":"sean-dev"},"gcloud":{"config":"default"},"pachctl":{"init_cmd":"dm-portforwarding.sh 30650 -fTNL"}}
