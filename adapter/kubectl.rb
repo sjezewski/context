@@ -14,7 +14,7 @@ module Adapter
         def use(config)
 			cmd = config['init_cmd']
 			unless cmd.nil?
-				`#{cmd}`
+				system cmd
 			end
 
             context_name = config['context']
