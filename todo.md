@@ -14,3 +14,19 @@ Todos
 - add support for s3 credentials
     - this will make the gcloud abst cleaner too prob
 - make into a binary for easier install (prob golang)
+||||||| merged common ancestors
+=======
+
+Cases to handle
+
+- switching gcloud accounts (this involves resetting the default application credentials ... which seem to be a global)
+- switching between local docker / docker-machine
+- switching between k8s contexts (minikube, local k8s, docker-machine k8s)
+
+- setting pachctl ADDRESS
+- vs using k8s port forward
+- vs using docker machine port forwarding
+... for this case ... running w just ADDRESS support for now.
+Avoiding `pachctl port-forward` avoids using the global k8s config (since that command runs a kubectl cmd under the hood) and therefore a host of other issues. And this way two different dirs can connect just fine at the same time.
+
+
