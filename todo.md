@@ -11,6 +11,7 @@ Todos
     - the global lock would include a value that is the CWD w the lock
     - if that doesn't match the PWD then we can prompt to acquire the lock
 - add support for 'saving' the current state (k8s) to a context file
+    - e.g. `ctx save kubectl` ... which would make a copy of hte kubeconfig, put it in the local dir, and update the `.ctx` file
 - add support for s3 credentials
     - this will make the gcloud abst cleaner too prob
 - make into a binary for easier install (prob golang)
