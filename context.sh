@@ -16,8 +16,8 @@ function pc() {
 
 function kc() {
 	check_command kubectl
-	ctx use gcloud kubectl
-	kubectl $@
+	ctx use kubectl
+	kubectl --kubeconfig=`ctx view kubectl kubeconfig` --context=`ctx view kubectl context` $@
 }
 
 
