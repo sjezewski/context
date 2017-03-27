@@ -11,7 +11,13 @@ function pc() {
 	check_command pachctl
 	ctx use gcloud kubectl pachctl
 	PC_ADDRESS=`$CTX_SOURCE_DIR/context.rb view pachctl address`
-	ADDRESS=$PC_ADDRESS pachctl $@
+    if [ $1 -eq "port-forward" ]
+    then
+        KUBECFG=`ctx view kubectl kubeconfig`
+        ADDRESS=$PC_ADDRESS pachctl --kubectlflags='--kubeconfig $KUBECFG' $@    
+    else
+	    ADDRESS=$PC_ADDRESS pachctl $@
+    fi
 }
 
 function kc() {
