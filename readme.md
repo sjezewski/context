@@ -102,3 +102,22 @@ $ kc config view | grep current-context
 current-context: sean-dev
 ```
 
+---
+
+### pachctl usage
+
+Either via port-forwarding or direct use of the ADDRESS variable.
+
+#### Using port forwarding
+
+Advantages                      Disadvantages
+==========                      =============
+don't need any IPs              can be flaky (and need restarting)
+                                slower for uploads (limited to 1MB/s)
+
+#### Using ADDRESS var directly
+
+Advantages                      Disadvantages
+==========                      =============
+faster uploads                  need static IP of a k8s node
+less prone to cxn errors        need to set ingress rules on cloud provider to connect
