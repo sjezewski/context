@@ -7,7 +7,7 @@ module Adapter
         class << self
 
 		def supported?(setting)
-			["init_cmd"].include? setting
+			["init_cmd","kubeconfig","context"].include? setting
 		end
 
         # Uses the config loaded from a .ctx file to set the environment's state
