@@ -16,6 +16,22 @@ Helper scripts to manage configuring state between:
 source path/to/this/repo/context.sh
 ```
 
+## Example config
+
+```
+$ctx view
+{
+  "kubectl": {
+    "context": "18adb008-pachydermcluster.kubernetes.com",
+    "kubeconfig": "kubeconfig"
+  },
+  "pachctl": {
+    "address": "0.0.0.0:30456",
+    "init_cmd": "pa-restart-as-needed"
+  }
+}
+```
+
 ## Usage
 
 Context uses a per-directory config file to setup your environment. This is done via a few commands:
@@ -110,14 +126,14 @@ Either via port-forwarding or direct use of the ADDRESS variable.
 
 #### Using port forwarding
 
-Advantages                      Disadvantages
-==========                      =============
+Advantages |                     Disadvantages
+--- | ---
 don't need any IPs              can be flaky (and need restarting)
                                 slower for uploads (limited to 1MB/s)
 
 #### Using ADDRESS var directly
 
-Advantages                      Disadvantages
-==========                      =============
+Advantages |                      Disadvantages
+--- | ---
 faster uploads                  need static IP of a k8s node
 less prone to cxn errors        need to set ingress rules on cloud provider to connect
