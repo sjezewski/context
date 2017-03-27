@@ -3,7 +3,7 @@
 
 CTX_SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source port-authority.sh
+source $CTX_SOURCE_DIR/port-authority.sh
 
 function ctx() {
 	$CTX_SOURCE_DIR/context.rb $@
