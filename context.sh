@@ -15,7 +15,9 @@ function pc() {
     if [ "$1" == "port-forward" ]
     then
         KUBECFG=`ctx view kubectl kubeconfig`
-        ADDRESS=$PC_ADDRESS pachctl --kubectlflags='--kubeconfig $KUBECFG' -p $PORT $@
+
+        pachctl --kubectlflags='--kubeconfig kubeconfig' -p 30456 port-forward
+        ADDRESS=$PC_ADDRESS pachctl --kubectlflags="--kubeconfig $KUBECFG" -p $PORT $@
     else
 	    ADDRESS=$PC_ADDRESS pachctl $@
     fi
