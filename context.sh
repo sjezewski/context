@@ -11,10 +11,11 @@ function pc() {
 	check_command pachctl
 	ctx use gcloud kubectl pachctl
 	PC_ADDRESS=`$CTX_SOURCE_DIR/context.rb view pachctl address`
-    if [ $1 -eq "port-forward" ]
+    PORT=`echo $PC_ADDRESS | cut -f 2 -d ":"`
+    if [ "$1" == "port-forward" ]
     then
         KUBECFG=`ctx view kubectl kubeconfig`
-        ADDRESS=$PC_ADDRESS pachctl --kubectlflags='--kubeconfig $KUBECFG' $@    
+        ADDRESS=$PC_ADDRESS pachctl --kubectlflags='--kubeconfig $KUBECFG' -p $PORT $@
     else
 	    ADDRESS=$PC_ADDRESS pachctl $@
     fi
