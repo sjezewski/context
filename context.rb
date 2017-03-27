@@ -119,11 +119,11 @@ def use(input_adapters)
             	STDERR.puts "Adapter #{name} not implemented."
             	exit 1
         	end
-       		adapters[name].use(config)
+       		adapters[name].use(config) unless config.nil?
     	end
 	else
 		input_adapters.each do |a|
-			adapters[a].use(ctx[a])
+			adapters[a].use(ctx[a]) unless ctx[a].nil?
 		end
 	end
 	finish = Time.now

@@ -20,6 +20,14 @@ module Adapter
             $1
         end
 
+        # TODO - setting/getting the 'global' config like this is the old way
+        # of doing things. I migrated kubectl to use inline flags so that I
+        # can have multiple projects connected to different clusters. Look into
+        # whether this is possible for gcloud as well.
+        #
+        # As-is, using the gcloud adapter is a global setting - you can only be
+        # connected to a single gcloud cluster at a time
+        #
         # Sets the current environment's state to the supplied value
         def set_config(value)
             valid_configs = list_valid_configs
