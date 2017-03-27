@@ -1,9 +1,5 @@
 Todos
 
-- make kubectl use a specific file / context
-- update pachctl to use ADDRESS (and get the IP from kubectl)
-    - use 0.0.0.0:someport
-    - plus port forwarding so that I can attach a number of pachctl commands
 - make easy script to kill / restart portforwarding
     - there are many cases where it can fail (node eviction, net disc, etc)
     - its annoying to trakc down the pid, and re-issue the command
