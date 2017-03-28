@@ -15,7 +15,8 @@ function pa-running() {
 }
 
 function pa-stop-as-needed() {
-    if [ pa-running -eq 0 ]
+    pa-running
+    if [ $? -eq 0 ]
     then
         pa-stop
     fi
@@ -27,7 +28,8 @@ function pa-restart() {
 }
 
 function pa-restart-as-needed() {
-   if [ pa-running -ne 0 ]
+   pa-running
+   if [ $? -ne 0 ]
    then
        pa-start
    fi
