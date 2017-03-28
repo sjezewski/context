@@ -126,8 +126,6 @@ def use(input_adapters)
 			adapters[a].use(ctx[a]) unless ctx[a].nil?
 		end
 	end
-	finish = Time.now
-	puts "Took #{finish-start}s to initialize state"
 end
 
 case parse_command

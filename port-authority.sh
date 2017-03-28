@@ -1,7 +1,7 @@
 function pa-start() {
     pc port-forward &
     child=$!
-    echo $child > $(PWD)/.port-authority
+    echo $child > $PWD/.port-authority
 }
 
 function pa-stop() {
