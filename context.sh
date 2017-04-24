@@ -14,10 +14,16 @@ function pc() {
 	ctx use gcloud kubectl pachctl
 	PC_ADDRESS=`$CTX_SOURCE_DIR/context.rb view pachctl address`
     PORT=`echo $PC_ADDRESS | cut -f 2 -d ":"`
+    if [ -z $PORT ]; then
+        PORT=30650
+    fi
+
     if [ "$1" == "port-forward" ]
     then
         KUBECFG=`ctx view kubectl kubeconfig`
-        ADDRESS=$PC_ADDRESS pachctl --kubectlflags="--kubeconfig $KUBECFG" -p $PORT $@
+        pachctl version
+        echo "running: ADDRESS=$PC_ADDRESS pachctl --kubectlflags="--kubeconfig $KUBECFG" -p $PORT $@"
+        ADDRESS=$PC_ADDRESS pachctl $@ --kubectlflags="--kubeconfig $KUBECFG" -p $PORT
     else
 	    ADDRESS=$PC_ADDRESS pachctl $@
     fi

@@ -43,4 +43,7 @@ function pa-port-from-pid() {
     ps -ef | grep kubectl | grep -v pachctl | grep port-forward | grep pachd | grep `cat $PWD/.port-authority` | rev | cut -f 1 -d " " | rev | cut -f 1 -d ":"
 }
 
-
+function pa-assasinate() {
+    # seeks out a PID w a matching port and kills it
+    ps -ef | grep kubectl | grep -v pachctl | grep port-forward | grep pachd | cut -f 2 -d " " | xargs kill $1
+}
